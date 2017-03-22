@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "554057834101",
+    "project_id": "post-political"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554057834101:android:498e7fb378cd446b",
+        "android_client_info": {
+          "package_name": "xyz.kjh.pp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554057834101-g85tj10864mma806mlucq1psdelr94n0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.kjh.pp",
+            "certificate_hash": "e4cf212a69a31da9218785cb94740049b586f49b"
+          }
+        },
+        {
+          "client_id": "554057834101-jeikktthrftv5koq84qcmm5q4rm2q2gi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgaBipvdOF3SXiYG_V3FH5RZ8HPAAD208"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

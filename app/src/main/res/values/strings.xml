@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">정치참여</string>
+    <string name="server_url">http://121.166.76.188:18001/pp</string>
+    <string name="copyright">all right reserved.</string>
+
+    <string name="choose_login_method">로그인 방법을 선택</string>
+
+    <string name="phone_no">전화번호</string>
+    <string name="age">나이</string>
+    <string-array name="ages">
+        <item>비밀</item>
+        <item>10대</item>
+        <item>20대</item>
+        <item>30대</item>
+        <item>40대</item>
+        <item>50대</item>
+        <item>60대</item>
+        <item>70대</item>
+    </string-array>
+    <string name="ideology">이념</string>
+    <string-array name="ideology_types">
+        <item>비밀</item>
+        <item>진보</item>
+        <item>보수</item>
+    </string-array>
+    <string name="party">정당</string>
+    <string-array name="parties">
+        <item>비밀</item>
+        <item>민주당</item>
+        <item>새누리당</item>
+        <item>국민의당</item>
+        <item>바른정당</item>
+        <item>정의당</item>
+    </string-array>
+    <string name="gender">성별</string>
+    <string-array name="gender_types">
+        <item>비밀</item>
+        <item>남</item>
+        <item>여</item>
+    </string-array>
+
+</resources>

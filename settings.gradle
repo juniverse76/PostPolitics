@@ -1,0 +1,5 @@
+include ':app'
+
+// 아래는 링크만 따오는 방식!!!
+include ':stuff'
+project (":stuff").projectDir = new File("../JuniverseStuff/stuff")
