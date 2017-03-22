@@ -74,6 +74,9 @@ public class ConstitutionActivity extends AppCompatActivity
             }
         });
 
+
+
+
         webView.loadUrl(getString(R.string.server_url) + CONSTITUTION_FILENAME);
 //        webView.setWebViewClient(new WebViewClient() {
 //            @Override
