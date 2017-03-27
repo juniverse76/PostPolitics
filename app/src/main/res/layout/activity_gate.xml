@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gate_bg"
-    tools:context="xyz.kjh.pp.GateActivity">
+    tools:context="xyz.kjh.pp.activity.GateActivity">
 
     <TextView
         android:id="@+id/fullscreen_content"

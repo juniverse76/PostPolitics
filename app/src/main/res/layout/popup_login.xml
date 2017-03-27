@@ -3,7 +3,7 @@
     android:id="@+id/popup_login"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="40dp">
+    android:padding="30dp">
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -14,7 +14,6 @@
     <LinearLayout
         android:id="@+id/login_view"
         android:orientation="vertical"
-        android:visibility="invisible"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
@@ -25,27 +24,28 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"/>
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <Button
+            android:id="@+id/facebook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp">
+            android:text="@string/login_facebook"
+            android:drawableLeft="@drawable/com_facebook_button_icon_white"
+            android:backgroundTint="@color/com_facebook_blue"
+            android:textColor="#fff"
+            style="@style/login_button_style"
+            android:layout_gravity="center_horizontal" />
 
-            <ImageButton
-                android:id="@+id/facebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="10dp"
-                android:src="@drawable/ic_facebook" />
-            <ImageButton
-                android:id="@+id/google"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="10dp"
-                android:src="@drawable/ic_google" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_google"
+            android:layout_marginTop="-6dp"
+            android:drawableLeft="@drawable/ic_google"
+            android:drawableTint="#888"
+            android:backgroundTint="#fff"
+            style="@style/login_button_style"
+            android:layout_gravity="center_horizontal" />
+
     </LinearLayout>
 </FrameLayout>

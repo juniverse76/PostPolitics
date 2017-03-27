@@ -10,4 +10,12 @@
     <color name="black_overlay">#66000000</color>
 
     <color name="login_icon">#aaa</color>
+
+
+
+    <color name="progressive">#ff0000</color>
+    <color name="conservative">#0000ff</color>
+    <color name="secret">#888888</color>
+    <color name="age_bg">#444</color>
+
 </resources>

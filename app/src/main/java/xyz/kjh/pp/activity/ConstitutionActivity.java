@@ -1,4 +1,4 @@
-package xyz.kjh.pp;
+package xyz.kjh.pp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.webkit.WebView;
 
 import xyz.juniverse.stuff.console;
+import xyz.kjh.pp.BuildConfig;
+import xyz.kjh.pp.R;
 import xyz.kjh.pp.popup.LoginPopup;
 
 public class ConstitutionActivity extends AppCompatActivity
@@ -49,6 +51,7 @@ public class ConstitutionActivity extends AppCompatActivity
 
         void start()
         {
+            if (BuildConfig.DEBUG) return;
             sendEmptyMessageDelayed(1, DELAY_BEFORE_SCROLL);
         }
 
@@ -74,17 +77,7 @@ public class ConstitutionActivity extends AppCompatActivity
             }
         });
 
-
-
-
         webView.loadUrl(getString(R.string.server_url) + CONSTITUTION_FILENAME);
-//        webView.setWebViewClient(new WebViewClient() {
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                if (scroller != null)
-//                    scroller.start();
-//            }
-//        });
         webView.setVerticalScrollBarEnabled(false);
 
         scroller = new Scroller(webView, new Scroller.OnScrollEnd() {

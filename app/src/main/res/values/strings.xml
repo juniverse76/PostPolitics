@@ -4,6 +4,8 @@
     <string name="copyright">all right reserved.</string>
 
     <string name="choose_login_method">로그인 방법을 선택</string>
+    <string name="login_facebook">페이스북</string>
+    <string name="login_google">구글</string>
 
     <string name="phone_no">전화번호</string>
     <string name="age">나이</string>
@@ -38,5 +40,12 @@
         <item>남</item>
         <item>여</item>
     </string-array>
+
+    <string name="additional_info">추가정보</string>
+    <string name="join">가입하기</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="action_write">글쓰기</string>
+    <string name="action_reply">답글쓰기</string>
 
 </resources>

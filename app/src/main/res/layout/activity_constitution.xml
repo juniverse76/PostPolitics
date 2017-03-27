@@ -5,7 +5,7 @@
     android:id="@+id/activity_constitution"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="xyz.kjh.pp.ConstitutionActivity">
+    tools:context="xyz.kjh.pp.activity.ConstitutionActivity">
 
     <WebView
         android:id="@+id/constitution"

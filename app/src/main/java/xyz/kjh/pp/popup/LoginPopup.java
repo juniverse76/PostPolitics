@@ -11,7 +11,12 @@ import android.view.ViewGroup;
 
 import xyz.juniverse.stuff.console;
 import xyz.juniverse.stuff.social.LoginMethod;
+import xyz.kjh.pp.activity.JoinActivity;
+import xyz.kjh.pp.activity.MainActivity;
 import xyz.kjh.pp.R;
+import xyz.kjh.pp.service.Server;
+import xyz.kjh.pp.service.model.req.LoginM;
+import xyz.kjh.pp.service.model.res.ResponseM;
 
 /**
  * Created by juniverse on 21/03/2017.
@@ -36,6 +41,8 @@ public class LoginPopup extends DialogFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getView().findViewById(R.id.login_view).setVisibility(View.INVISIBLE);
+
         view.findViewById(R.id.facebook).setOnClickListener(loginButtonListener);
         view.findViewById(R.id.google).setOnClickListener(loginButtonListener);
 
@@ -46,7 +53,7 @@ public class LoginPopup extends DialogFragment
             getView().findViewById(R.id.progress_bar).setVisibility(View.GONE);
         }
         else
-            goToMain();
+            loginToPPServer();
     }
 
     private View.OnClickListener loginButtonListener = new View.OnClickListener() {
@@ -54,10 +61,10 @@ public class LoginPopup extends DialogFragment
         public void onClick(View view) {
             console.i("onLoginButton", view.getId());
             if (view.getId() == R.id.facebook) {
-                if (method.getId() != LoginMethod.Facebook)
+                if (method.getPlatformId() != LoginMethod.Facebook)
                     method = LoginMethod.Factory.create(LoginMethod.Facebook, getActivity());
             } else if (view.getId() == R.id.google) {
-                if (method.getId() != LoginMethod.Google)
+                if (method.getPlatformId() != LoginMethod.Google)
                     method = LoginMethod.Factory.create(LoginMethod.Google, getActivity());
             }
 
@@ -65,7 +72,7 @@ public class LoginPopup extends DialogFragment
                 @Override
                 public void onResult(boolean success, String message) {
                     if (success)
-                        goToMain();
+                        loginToPPServer();
                     else
                         Snackbar.make(getActivity().findViewById(R.id.activity_constitution), message, Snackbar.LENGTH_LONG).show();
                 }
@@ -80,13 +87,44 @@ public class LoginPopup extends DialogFragment
             method.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void loginToPPServer()
+    {
+        getView().findViewById(R.id.login_view).setVisibility(View.INVISIBLE);
+        getView().findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+
+        LoginM model = new LoginM();
+        model.platform_type = method.getPlatformId();
+        model.platform_id = method.getUserId();
+
+        Server.getInstance().setLoginMethod(method);
+        Server.getInstance().call("/user/login", model, new Server.ResponseListener<ResponseM>() {
+            @Override
+            public void onResult(ResponseM result) {
+                if (!result.success)
+                {
+                    if ("E_10008".equals(result.ecode))          // 없는 유저.
+                        goToSignIn();
+                    else
+                        Snackbar.make(getActivity().findViewById(R.id.activity_constitution), result.message, Snackbar.LENGTH_LONG).show();
+                }
+                else
+                    goToMain();
+            }
+        });
+    }
+
+    private void goToSignIn()
+    {
+        dismiss();
+        getActivity().finish();
+        startActivity(new Intent(getContext(), JoinActivity.class));
+    }
+
     private void goToMain()
     {
         dismiss();
         getActivity().finish();
-        // todo service에다 로그인을 시도하고, 사용자 정보가 있으면 Main으로, 아니면 가입 창으로.
-//        startActivity(new Intent(getContext(), MainActivity.class));
-//        startActivity(new Intent(getContext(), LoginActivity.class));
+        startActivity(new Intent(getContext(), MainActivity.class));
     }
 }
 

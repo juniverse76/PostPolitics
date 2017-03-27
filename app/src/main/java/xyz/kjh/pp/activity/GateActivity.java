@@ -1,4 +1,4 @@
-package xyz.kjh.pp;
+package xyz.kjh.pp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.FirebaseApp;
 
-import xyz.juniverse.stuff.JuniversStuff;
+import xyz.juniverse.stuff.JuniverseStuff;
 import xyz.juniverse.stuff.console;
+import xyz.kjh.pp.BuildConfig;
+import xyz.kjh.pp.R;
 
 public class GateActivity extends AppCompatActivity
 {
@@ -25,8 +27,8 @@ public class GateActivity extends AppCompatActivity
         new Handler() {
             @Override
             public void handleMessage(Message msg) {
-//                startActivity(new Intent(getBaseContext(), ConstitutionActivity.class));
-                startActivity(new Intent(getBaseContext(), LoginActivity.class));
+                startActivity(new Intent(getBaseContext(), ConstitutionActivity.class));
+//                startActivity(new Intent(getBaseContext(), JoinActivity.class));
                 finish();
             }
         }.sendEmptyMessageDelayed(1, MIN_DELAY);
@@ -34,8 +36,7 @@ public class GateActivity extends AppCompatActivity
 
     private void prepareJuniverseStuff()
     {
-        JuniversStuff.init(getApplicationContext(), BuildConfig.DEBUG);
-        JuniversStuff.initRPC(getString(R.string.server_url));
+        JuniverseStuff.init(getApplicationContext(), BuildConfig.DEBUG);
 
         console.i("what the hell is this?");
         FirebaseApp.initializeApp(getBaseContext());
