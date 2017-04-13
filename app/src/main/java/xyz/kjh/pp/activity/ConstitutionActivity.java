@@ -13,6 +13,7 @@ import xyz.juniverse.stuff.console;
 import xyz.kjh.pp.BuildConfig;
 import xyz.kjh.pp.R;
 import xyz.kjh.pp.popup.LoginPopup;
+import xyz.kjh.pp.service.Server;
 
 public class ConstitutionActivity extends AppCompatActivity
 {
@@ -66,6 +67,7 @@ public class ConstitutionActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_constitution);
 
         final WebView webView = (WebView) findViewById(R.id.constitution);
@@ -77,7 +79,7 @@ public class ConstitutionActivity extends AppCompatActivity
             }
         });
 
-        webView.loadUrl(getString(R.string.server_url) + CONSTITUTION_FILENAME);
+        webView.loadUrl(Server.SERVER_URL + CONSTITUTION_FILENAME);
         webView.setVerticalScrollBarEnabled(false);
 
         scroller = new Scroller(webView, new Scroller.OnScrollEnd() {

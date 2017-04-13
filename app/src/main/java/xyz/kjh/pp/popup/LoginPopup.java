@@ -15,7 +15,7 @@ import xyz.kjh.pp.activity.JoinActivity;
 import xyz.kjh.pp.activity.MainActivity;
 import xyz.kjh.pp.R;
 import xyz.kjh.pp.service.Server;
-import xyz.kjh.pp.service.model.req.LoginM;
+import xyz.kjh.pp.service.model.req.LoginParams;
 import xyz.kjh.pp.service.model.res.ResponseM;
 
 /**
@@ -92,7 +92,7 @@ public class LoginPopup extends DialogFragment
         getView().findViewById(R.id.login_view).setVisibility(View.INVISIBLE);
         getView().findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
 
-        LoginM model = new LoginM();
+        LoginParams model = new LoginParams();
         model.platform_type = method.getPlatformId();
         model.platform_id = method.getUserId();
 
@@ -116,15 +116,15 @@ public class LoginPopup extends DialogFragment
     private void goToSignIn()
     {
         dismiss();
-        getActivity().finish();
         startActivity(new Intent(getContext(), JoinActivity.class));
+        getActivity().finish();
     }
 
     private void goToMain()
     {
         dismiss();
-        getActivity().finish();
         startActivity(new Intent(getContext(), MainActivity.class));
+        getActivity().finish();
     }
 }
 

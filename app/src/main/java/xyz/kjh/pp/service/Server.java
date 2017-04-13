@@ -57,7 +57,7 @@ public class Server
 
 
 
-    public static final String SERVER_URL = "http://121.166.76.188:18001/pp";
+    public static final String SERVER_URL = "http://121.134.159.155:18001/pp";
     public static final String CMD_KEY = "jhkim,./!@#$%^&";
     public static final String RES_KEY = "jhkim,./!@#$%^*";
 
@@ -130,6 +130,7 @@ public class Server
                         if (listener != null)
                         {
                             ResponseM res = listener.createResultInstance(result);
+                            console.d("response?", res);
                             listener.onResult(res);
                         }
                     }

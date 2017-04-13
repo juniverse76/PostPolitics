@@ -8,7 +8,7 @@ import xyz.kjh.pp.service.Server;
  * Created by juniverse on 24/03/2017.
  */
 
-public class LoginM extends Server.ReqParams
+public class LoginParams extends Server.ReqParams
 {
     public String clientVersionCode = BuildConfig.VERSION_NAME;
     public int platform_type;

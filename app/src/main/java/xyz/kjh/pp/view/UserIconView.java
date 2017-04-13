@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import xyz.kjh.pp.R;
-import xyz.kjh.pp.service.model.res.MainM;
+import xyz.kjh.pp.service.model.res.UserM;
 
 /**
  * Created by juniverse on 24/03/2017.
@@ -55,20 +55,20 @@ public class UserIconView extends FrameLayout
         addView(ageView, params);
     }
 
-    public void setUserInfo(MainM.UserCommon info)
+    public void setUserInfo(UserM info)
     {
         if (info == null) return;
 
-        if (info.sex == MainM.UserCommon.GENDER_MALE)
+        if (info.sex == UserM.GENDER_MALE)
             iconView.setImageResource(R.drawable.ic_man);
-        else if (info.sex == MainM.UserCommon.GENDER_FEMALE)
+        else if (info.sex == UserM.GENDER_FEMALE)
             iconView.setImageResource(R.drawable.ic_woman);
         else
             iconView.setImageResource(R.drawable.ic_person);
 
-        if (info.status == MainM.UserCommon.STATUS_PROGRESSIVE)
+        if (info.status == UserM.STATUS_PROGRESSIVE)
             iconView.setColorFilter(getResources().getColor(R.color.progressive));
-        else if (info.status == MainM.UserCommon.STATUS_CONSERVATIVE)
+        else if (info.status == UserM.STATUS_CONSERVATIVE)
             iconView.setColorFilter(getResources().getColor(R.color.conservative));
         else
             iconView.setColorFilter(getResources().getColor(R.color.secret));

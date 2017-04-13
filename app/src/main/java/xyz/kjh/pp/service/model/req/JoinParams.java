@@ -9,7 +9,7 @@ import xyz.kjh.pp.service.Server;
  * Created by juniverse on 24/03/2017.
  */
 
-public class JoinM extends Server.ReqParams
+public class JoinParams extends Server.ReqParams
 {
     public String clientVersionCode = BuildConfig.VERSION_NAME;       // 클라이언트 버전(형식없음)
     public int platform_type;               // 플랫폼 타입(1:페이스북,2:GUEST,3:GameCenter(IOS),4:GooglePlus(AOS),99:구분 불가능)
@@ -26,7 +26,7 @@ public class JoinM extends Server.ReqParams
     public int party;                       // 정당(0:비밀, 1:민주당, 2:새누리, 3.국민의당, 4:바른정당, 5:정의당', 6:기타)
     public int sex;                         // 남여구분(0:비밀, 1:남, 2:여)
 
-    public JoinM()
+    public JoinParams()
     {
         join_country = Locale.getDefault().getCountry();
     }

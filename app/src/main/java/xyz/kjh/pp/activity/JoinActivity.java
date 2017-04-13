@@ -13,7 +13,7 @@ import xyz.juniverse.stuff.console;
 import xyz.juniverse.stuff.social.LoginMethod;
 import xyz.kjh.pp.R;
 import xyz.kjh.pp.service.Server;
-import xyz.kjh.pp.service.model.req.JoinM;
+import xyz.kjh.pp.service.model.req.JoinParams;
 import xyz.kjh.pp.service.model.res.ResponseM;
 
 public class JoinActivity extends AppCompatActivity
@@ -40,7 +40,7 @@ public class JoinActivity extends AppCompatActivity
 
     public void join(View button)
     {
-        JoinM model = new JoinM();
+        JoinParams model = new JoinParams();
 
         Server server = Server.getInstance();
 

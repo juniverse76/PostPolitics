@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">정치참여</string>
-    <string name="server_url">http://121.166.76.188:18001/pp</string>
     <string name="copyright">all right reserved.</string>
 
     <string name="choose_login_method">로그인 방법을 선택</string>
@@ -47,5 +46,6 @@
 
     <string name="action_write">글쓰기</string>
     <string name="action_reply">답글쓰기</string>
+    <string name="title_activity_board">BoardActivity</string>
 
 </resources>

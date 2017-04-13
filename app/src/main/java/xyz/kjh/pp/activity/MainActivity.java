@@ -1,6 +1,8 @@
 package xyz.kjh.pp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,52 +15,63 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
 
 import xyz.juniverse.stuff.console;
+import xyz.juniverse.stuff.list.SimpleAdapter;
+import xyz.juniverse.stuff.list.SimpleHolder;
 import xyz.kjh.pp.R;
 import xyz.kjh.pp.service.Server;
+import xyz.kjh.pp.service.model.req.BoardListParams;
 import xyz.kjh.pp.service.model.res.MainM;
+import xyz.kjh.pp.service.model.res.ResponseM;
+import xyz.kjh.pp.service.model.res.UserM;
 import xyz.kjh.pp.view.UserIconView;
 
 public class MainActivity extends AppCompatActivity implements Server.WebSocketObserver
 {
-    class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.Holder>
+    private class MainViewHolder extends SimpleHolder<MainM.Group>
     {
-        class Holder extends RecyclerView.ViewHolder
-        {
-            Holder(View itemView) {
-                super(itemView);
-            }
-        }
-
-        private List<MainM.Group> list;
-        GroupListAdapter(List<MainM.Group> list)
-        {
-            this.list = list;
+        public MainViewHolder(View itemView) {
+            super(itemView);
         }
 
         @Override
-        public Holder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_group, parent, false);
-            return new Holder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(Holder holder, int position)
-        {
-            MainM.Group group = list.get(position);
-            ((TextView)holder.itemView.findViewById(R.id.number)).setText("" + group.number);
-            ((TextView)holder.itemView.findViewById(R.id.title)).setText(group.title);
-        }
-
-        @Override
-        public int getItemCount() {
-            if (list == null) return 0;
-            return list.size();
+        public void bind(MainM.Group data) {
+            ((TextView)itemView.findViewById(R.id.number)).setText("" + data.number);
+            ((TextView)itemView.findViewById(R.id.title)).setText(data.title);
         }
     }
+
+    private SimpleHolder.Factory viewFactory = new SimpleHolder.Factory() {
+        @Override
+        public SimpleHolder onCreate(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_group, parent, false);
+            return new MainViewHolder(view);
+        }
+    };
+
+    private SimpleHolder.ItemInteraction interaction = new SimpleHolder.ItemInteraction<MainM.Group>() {
+        @Override
+        public void onItemInteracted(SimpleHolder.ItemAction action, MainM.Group data) {
+            Intent intent = new Intent(getBaseContext(), BoardActivity.class);
+            intent.putExtra(BoardActivity.ARG_GROUP_GSN, data.group_gsn);
+            intent.putExtra(BoardActivity.ARG_GROUP_TITLE, data.title);
+            startActivity(intent);
+        }
+    };
+
+
+
+
+
 
     private MainM mainData;
 
@@ -69,9 +82,14 @@ public class MainActivity extends AppCompatActivity implements Server.WebSocketO
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setDisplayShowHomeEnabled(false);
+        }
+
         registerActions();
 
-        console.i("calling main");
         Server.getInstance().call("/main", new Server.ResponseListener<MainM>() {
             @Override
             public void onResult(MainM result) {
@@ -81,13 +99,7 @@ public class MainActivity extends AppCompatActivity implements Server.WebSocketO
                     if (mainData.real_url != null)
                         Server.getInstance().connectWebSocket(mainData.real_url);
 
-                    console.i("mainData?", mainData);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateUI();
-                        }
-                    });
+                    runOnUiThread(updateUI);
                 }
                 else
                     Snackbar.make(findViewById(R.id.activity_main), result.message, Snackbar.LENGTH_LONG).show();
@@ -110,19 +122,18 @@ public class MainActivity extends AppCompatActivity implements Server.WebSocketO
         }
     };
 
-    private void updateUI()
-    {
-        console.i("updating ui!!!");
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-        {
-            actionBar.setTitle("");
-            actionBar.setDisplayShowHomeEnabled(false);
+    private Runnable updateUI = new Runnable() {
+        @Override
+        public void run() {
+            console.i("updating ui!!!");
+            mainData.user.sex = UserM.GENDER_FEMALE;
+            mainData.user.status = UserM.STATUS_PROGRESSIVE;
             ((UserIconView)findViewById(R.id.user_icon)).setUserInfo(mainData.user);
-        }
+            // todo 이건 서버에서 데이터를 다르게 줘야 한다...
 
-        ((RecyclerView)findViewById(R.id.list)).setAdapter(new GroupListAdapter(mainData.group));
-    }
+            ((RecyclerView)findViewById(R.id.list)).setAdapter(new SimpleAdapter(mainData.group, viewFactory, interaction));
+        }
+    };
 
     @Override
     protected void onResume() {
