@@ -42,10 +42,12 @@
 
     <string name="additional_info">추가정보</string>
     <string name="join">가입하기</string>
-    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="write_success">글을 성공적으로 올렸습니다.</string>
 
     <string name="action_write">글쓰기</string>
     <string name="action_reply">답글쓰기</string>
     <string name="title_activity_board">BoardActivity</string>
+    <string name="title_activity_write">WriteActivity</string>
 
 </resources>

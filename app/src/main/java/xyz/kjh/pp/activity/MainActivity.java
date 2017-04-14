@@ -2,7 +2,6 @@ package xyz.kjh.pp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,23 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-
 import xyz.juniverse.stuff.console;
 import xyz.juniverse.stuff.list.SimpleAdapter;
 import xyz.juniverse.stuff.list.SimpleHolder;
+import xyz.kjh.pp.Director;
 import xyz.kjh.pp.R;
 import xyz.kjh.pp.service.Server;
-import xyz.kjh.pp.service.model.req.BoardListParams;
 import xyz.kjh.pp.service.model.res.MainM;
-import xyz.kjh.pp.service.model.res.ResponseM;
 import xyz.kjh.pp.service.model.res.UserM;
 import xyz.kjh.pp.view.UserIconView;
 
@@ -39,36 +28,44 @@ public class MainActivity extends AppCompatActivity implements Server.WebSocketO
 {
     private class MainViewHolder extends SimpleHolder<MainM.Group>
     {
+        MainM.Group data;
         public MainViewHolder(View itemView) {
             super(itemView);
         }
 
         @Override
         public void bind(MainM.Group data) {
+            this.data = data;
+
             ((TextView)itemView.findViewById(R.id.number)).setText("" + data.number);
             ((TextView)itemView.findViewById(R.id.title)).setText(data.title);
+
+            itemView.setOnClickListener(listener);
         }
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), BoardActivity.class);
+                intent.putExtra(BoardActivity.ARG_GROUP_GSN, data.group_gsn);
+                intent.putExtra(BoardActivity.ARG_GROUP_TITLE, data.title);
+                startActivity(intent);
+            }
+        };
     }
 
-    private SimpleHolder.Factory viewFactory = new SimpleHolder.Factory() {
+    private SimpleHolder.Factory factory = new SimpleHolder.Factory<MainM.Group>() {
         @Override
         public SimpleHolder onCreate(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_group, parent, false);
             return new MainViewHolder(view);
         }
-    };
 
-    private SimpleHolder.ItemInteraction interaction = new SimpleHolder.ItemInteraction<MainM.Group>() {
         @Override
-        public void onItemInteracted(SimpleHolder.ItemAction action, MainM.Group data) {
-            Intent intent = new Intent(getBaseContext(), BoardActivity.class);
-            intent.putExtra(BoardActivity.ARG_GROUP_GSN, data.group_gsn);
-            intent.putExtra(BoardActivity.ARG_GROUP_TITLE, data.title);
-            startActivity(intent);
+        public int getViewType(MainM.Group data) {
+            return 0;
         }
     };
-
-
 
 
 
@@ -99,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements Server.WebSocketO
                     if (mainData.real_url != null)
                         Server.getInstance().connectWebSocket(mainData.real_url);
 
+                    Director.getInstance().setUser(mainData.user);
+
                     runOnUiThread(updateUI);
                 }
                 else
@@ -126,12 +125,12 @@ public class MainActivity extends AppCompatActivity implements Server.WebSocketO
         @Override
         public void run() {
             console.i("updating ui!!!");
-            mainData.user.sex = UserM.GENDER_FEMALE;
-            mainData.user.status = UserM.STATUS_PROGRESSIVE;
+//            mainData.user.sex = UserM.GENDER_FEMALE;
+//            mainData.user.status = UserM.STATUS_PROGRESSIVE;
             ((UserIconView)findViewById(R.id.user_icon)).setUserInfo(mainData.user);
             // todo 이건 서버에서 데이터를 다르게 줘야 한다...
 
-            ((RecyclerView)findViewById(R.id.list)).setAdapter(new SimpleAdapter(mainData.group, viewFactory, interaction));
+            ((RecyclerView)findViewById(R.id.list)).setAdapter(new SimpleAdapter(mainData.group, factory));
         }
     };
 

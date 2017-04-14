@@ -26,4 +26,12 @@ public class UserM {
         public int nickname_yn;
         public int is_connect;
     }
+
+    public void set(UserM clone)
+    {
+        this.sex = clone.sex;
+        this.age = clone.age;
+        this.party = clone.party;
+        this.status = clone.status;
+    }
 }

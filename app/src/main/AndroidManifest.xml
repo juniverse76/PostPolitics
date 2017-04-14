@@ -54,6 +54,11 @@
             android:label="@string/title_activity_board"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".activity.WriteActivity"
+            android:label="@string/title_activity_write"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
